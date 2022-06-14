@@ -1,0 +1,7 @@
+{
+    "class": "data",
+    "data": {
+        "Property1": "New Value 1",
+        "Property2": "New Value 2"
+    }
+}
