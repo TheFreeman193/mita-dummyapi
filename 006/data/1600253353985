@@ -1,0 +1,40 @@
+{
+  "data": {
+    "Random_0hq2hoF0": [
+      [
+        0.011238362780693345,
+        null,
+        null,
+        false,
+        false
+      ],
+      null,
+      "QTWtso69cfhM7bIaK1q+OJwAjC8yPGRN",
+      {
+        "Random_8jCCYJTq": true,
+        "Random_OZ3f1PWJ": 0.34873839350222,
+        "Random_HZWiXZUH": null,
+        "Random_ECBNY0ZD": 5.0580219706830576E-05,
+        "Random_0da0ZQWo": null
+      },
+      [
+        "NC5W1URMsxOpScvIH6GBezAJwdV0jK9F",
+        true,
+        false,
+        true,
+        {
+          "Random_9G7G9F9L": "KIc9SmYk4LAWrlajZ5QVDRCFx0ehpfBP",
+          "Random_JY2GN5Gm": 0.08324088619964287,
+          "Random_sHuEnTRT": false,
+          "Random_tgdXngC0": "KABZQnyc8ht7RMW4xiNXT15SaGH6gsjl",
+          "Random_QPzbWd6E": 0.033617912813692974
+        }
+      ]
+    ],
+    "Random_lJMLkwiI": 1312430840,
+    "Random_MsV1pSXe": 1628304185,
+    "Random_GbGnO5OD": null,
+    "Random_4jVfVKHH": 605572368
+  },
+  "class": "data"
+}

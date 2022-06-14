@@ -1,0 +1,100 @@
+{
+  "data": {
+    "Random_PMLnUvbO": 1669664910,
+    "Random_mHgtlCX7": null,
+    "Random_wVBkmH7E": null,
+    "Random_V7JQnprQ": [
+      "TaN/3pKAMlZGgRSOyoeLmVuidEhx1kvQ",
+      207296244,
+      false,
+      [
+        [
+          0.1103496235815149,
+          1461062669,
+          null,
+          "MNvil+Obd2Rp4Etnmkq7oJh83c5xfQSZ",
+          1753921927
+        ],
+        null,
+        2035593315,
+        null,
+        [
+          "p7PE4qVFudDZCcR2zieAtaJrYknTXLwj",
+          null,
+          null,
+          0.412041681610506,
+          0.4514992652545017
+        ]
+      ],
+      [
+        [
+          null,
+          0.3011572309220598,
+          null,
+          0.3794848763349997,
+          0.4855082231148796
+        ],
+        "VoEFkxq3SJ7rLX8TtNDseORylzvHQn+I",
+        false,
+        "/osD32jn0ctF7KhIZfvuRUPHTOSGLiz+",
+        "Y4aD7bgVvOp0H2EjSTXAWsrGtz/klfc6"
+      ]
+    ],
+    "Random_C7hK9x7c": [
+      {
+        "Random_PojeBFl8": 0.35555086602512,
+        "Random_6ZV936SJ": 1194346232,
+        "Random_43pfeXGF": [
+          0.06973293114462198,
+          0.620841468730314,
+          2065798968,
+          0.7421851655879832,
+          null
+        ],
+        "Random_EDCNcnyg": 0.21886780727190014,
+        "Random_JxsJ0Jn2": [
+          "9cOjqFJIYPaeGhMtTp520zCdrwN+xkLS",
+          null,
+          true,
+          "7wnREm35g+Q9HdN1bxK0qyo/GDflBrtv",
+          null
+        ]
+      },
+      0.6716152621159679,
+      28446674,
+      {
+        "Random_biQtikAr": 0.08480304658764692,
+        "Random_r8X23bvq": 0.29481621340844955,
+        "Random_EBcoIPlK": false,
+        "Random_5kMa1Z58": null,
+        "Random_4fhD0i4H": "tKchD2IPGCrRBFkY7ZfJT09bSyiHEnWe"
+      },
+      {
+        "Random_ahNZxsCz": null,
+        "Random_W5kVMRM8": {
+          "Random_kqGmFGRn": null,
+          "Random_6DdteIS4": 0.9178025151754685,
+          "Random_oRvQKOYZ": null,
+          "Random_c4MsNiwz": 892491685,
+          "Random_sfT69m2h": 273090242
+        },
+        "Random_UC0imOhX": false,
+        "Random_qtW10DBn": {
+          "Random_onVew6cQ": 1990247730,
+          "Random_1sYPuzCo": 92221459,
+          "Random_UMe6tSjC": null,
+          "Random_WBtiSqNm": 0.9169301020372864,
+          "Random_7IpTzBHF": null
+        },
+        "Random_88e39fgV": [
+          1573238410,
+          null,
+          false,
+          "ZWS5O3ULyTtqF1GpC+vXbBgInQNeVjHd",
+          "QZoqBW7DU6hPKVYMudyTLrk5SCEHOnlf"
+        ]
+      }
+    ]
+  },
+  "class": "data"
+}
