@@ -45,7 +45,7 @@ function Get-DataStoreFile {
 
         # If store file doesn't exist, create a blank one with current time
         if (-not $Exists) {
-            Export-Clixml -LiteralPath $StoreFile -InputObject @{}
+            Export-Clixml -LiteralPath $StoreFile -InputObject ([pscustomobject]@{})
         }
 
         # return FileInfo for store file
@@ -54,37 +54,43 @@ function Get-DataStoreFile {
 }
 
 function New-DataStore {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name
     )
+    process {
+        # Determine valid store filename, check it doesn't exist, and create it
+        $StoreFile = Get-DataStoreFile -Name $Name -MustNotExist
 
-    # Determine valid store filename, check it doesn't exist, and create it
-    $StoreFile = Get-DataStoreFile -Name $Name -MustNotExist
+        # If it exists or the path was invalid, stop
+        if (-not $? -or $null -eq $StoreFile) { return }
 
-    # If it exists or the path was invalid, stop
-    if (-not $? -or $null -eq $StoreFile) { return }
-
-    # Return new data store
-    Get-DataStore -Name $Name
+        # Return new data store
+        Get-DataStore -Name $Name
+    }
 }
 
 function Remove-DataStore {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name
     )
-    # Determine valid store filename and check it exists
-    $StoreFile = Get-DataStoreFile -Name $Name -MustExist
+    process {
+        # Determine valid store filename and check it exists
+        $StoreFile = Get-DataStoreFile -Name $Name -MustExist
 
-    # If it doesn't, stop
-    if (-not $? -or $null -eq $StoreFile) { return }
+        # If it doesn't, stop
+        if (-not $? -or $null -eq $StoreFile) { return }
 
-    # Delete store file
-    Remove-Item -LiteralPath $StoreFile
+        # Delete store file
+        Remove-Item -LiteralPath $StoreFile
+    }
 }
 
 function Get-DataStore {
+    [CmdletBinding()]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name
@@ -109,12 +115,16 @@ function Get-DataStore {
 }
 
 function Set-DataStore {
+    [CmdletBinding()]
     param (
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name,
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [psobject]$Data,
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
+        [ValidateScript({
+            $_ -ge [DateTime]::new(2000, 1, 1, 0, 0, 0, 0, 1)
+        })]
         [datetime]$Update
     )
     process {
@@ -138,28 +148,63 @@ function Set-DataStore {
     }
 }
 
+function Get-DataStoreDate {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+    process {
+        $StoreFile = Get-DataStoreFile -Name $Name -MustExist
+    
+        $StoreFile.LastWriteTimeUtc
+    }
+}
+
+function Set-DataStoreDate {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+        [ValidateScript({
+            $_ -ge [DateTime]::new(2000, 1, 1, 0, 0, 0, 0, 1)
+        })]
+        [datetime]$Update
+    )
+    process {
+        $StoreFile = Get-DataStoreFile -Name $Name -MustExist
+    
+        Set-ItemProperty -LiteralPath $StoreFile -Name LastWriteTimeUtc -Value $Update
+    }
+}
+
 function Update-DataStore {
-    param ([string]$Name, [string]$Source)
-
-    # Get list of updates from API
-    $RequestUri = '{0}/{1}' -f $Source.TrimEnd('/'), 'updates'
-    $Updates = (Invoke-RestMethod -Uri $RequestUri).updates.date
-
-    # Determine latest update and parse unix timestamp
-    [int64]$Latest = 0
-    $Updates.ForEach{ if ($_ -gt $Latest) { $Latest = $_ } }
-    $Update = [datetime]::new(1970, 1, 1, 0, 0, 0, 1).AddMilliseconds($Latest)
-
-    # Get local data store
-    $Store = Get-DataStore -Name $Name
-
-    # Compare updates, and stop if local store is up-to-date
-    if ($Update -le $Store.Update) { return }
-
-    # Get data of latest update from API
-    $RequestUri = '{0}/{1}/{2}' -f $Source.TrimEnd('/'), 'data', $Latest
-    [psobject]$NewData = Invoke-RestMethod $RequestUri
-
-    # Save new data to local store
-    Set-DataStore -Name $Store.Name -Data $NewData.data -Update $Update
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)][string]$Name,
+        [Parameter(Mandatory)][string]$Source
+    )
+    process {
+        # Get list of updates from API
+        $RequestUri = '{0}/{1}' -f $Source.TrimEnd('/'), 'updates'
+        $Updates = (Invoke-RestMethod -Uri $RequestUri).updates.date
+    
+        # Determine latest update and parse unix timestamp
+        [int64]$Latest = 0
+        $Updates.ForEach{ if ($_ -gt $Latest) { $Latest = $_ } }
+        $Update = [datetime]::new(1970, 1, 1, 0, 0, 0, 0, 1).AddMilliseconds($Latest)
+    
+        # Get local data store
+        $Store = Get-DataStore -Name $Name
+    
+        # Compare updates, and stop if local store is up-to-date
+        if ($Update -le $Store.Update) { return }
+    
+        # Get data of latest update from API
+        $RequestUri = '{0}/{1}/{2}' -f $Source.TrimEnd('/'), 'data', $Latest
+        [psobject]$NewData = Invoke-RestMethod $RequestUri
+    
+        # Save new data to local store
+        Set-DataStore -Name $Name -Data $NewData.data -Update $Update
+    }
 }
