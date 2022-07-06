@@ -23,10 +23,16 @@ See the [readme](https://github.com/TheFreeman193/mita-dummyapi/blob/main/README
     cd ./Edition-01/Mocking/DataStoreDemo/
     ```
 
-+ To run the Pester tests:
++ To run all the Pester tests:
 
     ```PowerShell
     Invoke-Pester -Path ./Examples*.Tests.ps1 -Output Detailed
+    ```
+
++ To run tests from a single file:
+
+    ```PowerShell
+    Invoke-Pester -Path ./Examples3and4.Tests.ps1 -Output Detailed
     ```
 
 + To use the demo functions in the current session:
